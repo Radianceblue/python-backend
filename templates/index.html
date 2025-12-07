@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Labb 2 - Enhörningar</title>
+</head>
+<body>
+    <h1> Labb 2 - Enhörningar </h1>
+
+    <section>
+       
+        <table> 
+            <th> </th>
+            <tr>
+                <td id="list">
+                    <ul id="unicorns">
+                        <li> <a href=""> Enhörning 1 </a> </li>
+                        <li> <a href=""> Enhörning 2 </a> </li>
+                        <li> <a href=""> Enhörning 3 </a> </li>
+                    </ul>
+                </td>
+              
+                <td id="info">
+                <h2 id="unicornName"> </h2>
+                <span id="unicornimage">  </span>
+                <p id="unicornInfo"> </p>
+                <p id="unicornSighting"> </p>
+
+
+                <button type="button" id="addUnicorn"> Lägg till enhörning </button>
+                <button type="button" id="updateUnicorn"> Uppdatera enhörning </button>
+                <button type="button" id="deleteUnicorn"> Ta bort enhörning </button>
+
+                    <form name="existingUnicorn" id="existingUnicorn">
+                        <input type="hidden" name="id">
+                        <label for="name">Enhörningens namn</label>
+                        <input type="text" name="name"><br>
+                        <label for="reportedBy">Vem såg den?</label>
+                        <input type="text" name="reportedBy"><br>
+                        <label for="spottedWhere.name">Var sågs den?</label>
+                        <input type="text" name="spottedWhere.name"><br>
+                        <label for="spottedWhere.lat">Latitud</label>
+                        <input type="text" name="spottedWhere.lat"><br>
+                        <label for="spottedWhere.lon">Longitud</label>
+                        <input type="text" name="spottedWhere.lon"><br>
+                        <label for="spottedWhen">När sågs den?</label>
+                        <input type="date" name="spottedWhen"><br>
+                        <label for="image">Bild</label>
+                        <input type="text" name="image"><br>
+                        <label for="description">Beskrivning</label>
+                        <textarea name="description"></textarea><br>
+                        <button type="button" id="putUnicorn">Skicka</button>
+                    </form>
+
+                    <form name="newUnicorn" id="newUnicorn">
+                        <input type="hidden" name="id">
+                        <label for="name">Enhörningens namn</label>
+                        <input type="text" name="name"><br>
+                        <label for="reportedBy">Vem såg den?</label>
+                        <input type="text" name="reportedBy"><br>
+                        <label for="spottedWhere.name">Var sågs den?</label>
+                        <input type="text" name="spottedWhere.name"><br>
+                        <label for="spottedWhere.lat">Latitud</label>
+                        <input type="text" name="spottedWhere.lat"><br>
+                        <label for="spottedWhere.lon">Longitud</label>
+                        <input type="text" name="spottedWhere.lon"><br>
+                        <label for="spottedWhen">När sågs den?</label>
+                        <input type="date" name="spottedWhen"><br>
+                        <label for="image">Bild</label>
+                        <input type="text" name="image"><br>
+                        <label for="description">Beskrivning</label>
+                        <textarea name="description"></textarea><br>
+                        <button type="button" id="postUnicorn">Skicka</button>
+                    </form>
+
+                </td>   
+            </tr>    
+        </table>
+    
+    </section>
+    <script src="script.js"> </script>
+</body>
+</html>
