@@ -5,8 +5,9 @@
 
 # -*- coding: utf-8 -*-
 #FastAPI is a modern, fast (high-performance), web framework for building APIs with Python based on standard Python type hints.
-from fastapi import FastAPI, Header, Request
+from fastapi import FastAPI, Header, Request, HTTPException
 from unicorns import storage
+from unicorns.Unicorn import Unicorn
 from typing import Annotated
 from fastapi.middleware.cors import CORSMiddleware #Vi importerar CORSmiddleware för att fixa "CORS" error
 
@@ -73,25 +74,60 @@ async def show_unicorn_list(request: Request, accept: Annotated[str | None, Head
             "name": unicorn.name,
             "details": "http://localhost:8000/" + str(unicorn.id)   
             })  
+        
     """
-        unicorn_list.append() Lägger till formaterad data. För varje enhörning i loopen skapas ett nytt dictionary (objekt i JSON-termer)
-        med exakt de tre nycklarna (id, name, details) som API:et ska returnera.
-    """    
+    unicorn_list.append() Lägger till formaterad data. För varje enhörning i loopen skapas ett nytt dictionary (objekt i JSON-termer)
+    med exakt de tre nycklarna (id, name, details) som API:et ska returnera.
+    """  
+    return unicorn_list    
+      
 @app.get("/{id}")
-async def display_unicorn(id):
-   return {"id": id}
-
+async def display_unicorn(id: int, accept: Annotated[str | None, Header()] = None):
+    
+    unicorn = storage.fetch_unicorn(id) #hämtar en specifik enhörning från unicorn listan. 
+   
+    #Egentligen behövs Accept-headern inte alls. FastAPI returnerar JSON oavsett.
+    if accept == "application/json":
+        return unicorn
+    else: 
+        return None
+ 
 @app.post("/")
-async def add_unicorn():
-    return {"new_unicorn": "new_unicorn"}
+async def add_unicorn(unicorn: Unicorn):
+    
+    """
+    Tar emot ett Unicorn-objekt från request-body.
+    FastAPI läser JSON som skickas in och skapar ett Unicorn-objekt.
+
+    Anropar storage.add_unicorn(unicorn)
+    Detta innebär nästan alltid:
+
+    Spara den nya unicornen i databasen
+
+    Tilldela ett ID, Lagra dess attribut och 
+    Returnerar den nyss sparade unicornen som JSON
+    """    
+    storage.add_unicorn(unicorn)
+    return unicorn
 
 @app.put("/{id}")
-async def update_unicorn(unicorn_name):
-    return {"unicorn_name": unicorn_name}
+async def update_unicorn(id:int, unicorn: Unicorn):
+    """
+    Uppdaterar en befintlig enhörning i databasen.
+
+    Den här funktionen realiserar API-dokumentationens "PUT /<id>".
+    Den tar emot en enhörning i request-body (JSON) och ersätter den
+    befintliga enhörningen med samma id. Returnerar den uppdaterade enhörningen.
+    
+    Realisera = implementera eller bygga ut en funktionalitet enligt API-specifikationen
+    """
+    storage.update_unicorn(id, unicorn)
+    return unicorn
 
 @app.delete("/{id}")
-async def delete_unicorn(unicorn_id):
-    return {"unicorn_id": unicorn_id}
+async def delete_unicorn(id:int):
+    storage.delete_unicorn(id)
+    return {"unicorn_id": id}
 
 
 
